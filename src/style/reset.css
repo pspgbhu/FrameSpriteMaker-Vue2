@@ -1,0 +1,13 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,a，i{ margin:0; padding:0; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;}
+body {background-color: #fff;
+    color: #000;
+    font: 400 14px/1.5 "微软雅黑","Hiragino Sans GB","WenQuanYi Micro Hei",tahoma,sans-serif;}
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var, i { font-style:normal; font-weight:normal;}
+a {color:#000; text-decoration:none; display: block;}
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; }
+button{border: none;outline: none;}
+table { border-collapse:collapse; }
+input,button,textarea,a{-webkit-tap-highlight-color: rgba(255,255,255,0);}

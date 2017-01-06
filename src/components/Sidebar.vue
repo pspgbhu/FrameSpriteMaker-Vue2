@@ -1,6 +1,16 @@
+<!--
+输出：
+1 文件的url列表
+2 创建的Image集合
+2 新设置的像素参数
+
+TODO:
+
+ -->
+
 <template lang="html">
   <div>
-    <div class="sidebar">
+    <div class="sidebar shadow">
 
       <div>
         <label for="upImg" class="sidebar-btn">
@@ -15,7 +25,7 @@
         </div>
       </div>
 
-      <div v-if="true" class="settings">
+      <div v-show="settings_show" class="settings">
         <div class="settings-item">
           <label>宽度：</label>
           <input v-model="width" type="number" placeholder="不填写则取默认值" /> px
@@ -26,6 +36,14 @@
           <input v-model="height" type="number" placeholder="不填写则取默认值" /> px
         </div>
 
+        <p class="tip">注：此为单张图片的宽高</p>
+
+      </div>
+
+      <div v-show="settings_show">
+        <div class="sidebar-btn" @click="_emitChange">
+          生成图片
+        </div>
       </div>
 
     </div>
@@ -42,6 +60,7 @@ export default {
       informations: [],
       files: [],
       urls: [],
+      settings_show: false,
       value: '',
       width: 0,
       height: 0,
@@ -50,39 +69,30 @@ export default {
 
   watch: {
     urls(val) {
-      this.$emit('urlsChange', val);
+
+      this.settings_show = true;
 
       this.files = this._creatImageDom(val);
-    },
+      this.informations = this._checkInfors(this.files);
 
-    files(val) {
+      this.files[0].onload = () => {
+        const pixel = this._getPixel(this.files[0]);
 
-      this.informations = this._checkInfors(val);
-    },
-
-    width(val) {
-      const pixel = {
-        width: val,
-        height: this.height,
+        this.width = pixel.width;
+        this.height = pixel.height;
       };
-
-      this.$emit('pixelChange', pixel);
-    },
-
-    height(val) {
-      const pixel = {
-        width: this.width,
-        height: val,
-      };
-
-      this.$emit('pixelChange', pixel);
     },
   },
 
   methods: {
     _uploadImg(e) {
+
       const filesList = e.target.files;
       const urlList = [];
+
+      if (filesList.length === 0) {
+        return;
+      }
 
       for (const v of filesList) {
         const src = window.URL.createObjectURL(v);
@@ -109,8 +119,8 @@ export default {
 
         const img = inval;
         img.onload = () => {
-
-          if (inval.naturalWidth !== files[0].naturalWidth) {
+          if ((inval.naturalWidth !== files[0].naturalWidth) ||
+            (inval.naturalHeight !== files[0].naturalHeight)) {
 
             arr.push(`请检查第${index + 1}张图片像素是否一致！`);
           }
@@ -118,6 +128,27 @@ export default {
       });
 
       return arr;
+    },
+
+    _getPixel(file) {
+      const obj = {
+        width: file.naturalWidth,
+        height: file.naturalHeight,
+      };
+
+      return obj;
+    },
+
+    _emitChange() {
+      const obj = {
+        pixel: {
+          width: this.width,
+          height: this.height,
+        },
+        files: this.files,
+      };
+
+      this.$emit('change', obj);
     },
   },
 };
@@ -183,6 +214,10 @@ export default {
           background-color: #e9e9e9;
           border-radius: 4px;
         }
+
+      }
+      .tip{
+        margin-top: 10px;
       }
     }
   }

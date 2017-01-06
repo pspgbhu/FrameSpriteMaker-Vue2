@@ -10,8 +10,8 @@
     </header>
 
     <div class="main">
-      <el-content ref="cont" class="main-content" :urls="urls" :pixel="pixel"></el-content>
-      <el-sidebar ref="bar" class="main-sidebar" :infors="infors"></el-sidebar>
+      <el-content ref="cont" class="main-content" :files="files" :pixel="pixel"></el-content>
+      <el-sidebar ref="bar" class="main-sidebar"></el-sidebar>
     </div>
   </div>
 </template>
@@ -30,9 +30,7 @@ export default {
 
   data() {
     return {
-      urls: [],
-      imgs: [],
-      infors: [],
+      files: [],
       pixel: {
         width: 0,
         height: 0,
@@ -41,14 +39,10 @@ export default {
   },
 
   mounted() {
-    this.$refs.bar.$on('urlsChange', val => {
-
-      this.urls = val;
-    });
-
-    this.$refs.bar.$on('pixelChange', val => {
-
-      this.pixel = val;
+    this.$refs.bar.$on('change', val => {
+      console.debug('sidebar change');
+      this.files = val.files;
+      this.pixel = val.pixel;
     });
   },
 };
@@ -62,6 +56,15 @@ export default {
     font-size: 16px;
     color: #333;
   }
+
+  .shadow{
+    box-shadow: 2px 2px 10px 0px #aaa;
+  }
+
+  .tip{
+    color: #999;
+  }
+
   .header{
     display: flex;
     justify-content: space-between;;

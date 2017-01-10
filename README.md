@@ -17,6 +17,4 @@ npm run build
 
 ## Doing
 
-UI complete.
-
-Doing about functions
+Core completed.

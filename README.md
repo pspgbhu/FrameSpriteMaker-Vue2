@@ -1,6 +1,10 @@
 # frames-sprite-maker
 
+v 0.9.0
+
 > a Vue2 + Webpack project
+
+
 
 ## Build Setup
 
@@ -14,7 +18,3 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-## Doing
-
-Core completed.

@@ -28,15 +28,28 @@ TODO:
       <div v-show="settings_show" class="settings">
         <div class="settings-item">
           <label>宽度：</label>
-          <input v-model="width" type="number" placeholder="不填写则取默认值" /> px
+          <input v-model="width" min="0" type="number" placeholder="不填写则取默认值" /> px
         </div>
 
         <div class="settings-item">
           <label>高度：</label>
-          <input v-model="height" type="number" placeholder="不填写则取默认值" /> px
+          <input v-model="height" min="0" type="number" placeholder="不填写则取默认值" /> px
+        </div>
+        <p class="tip">注：此为单张图片的宽高</p>
+      </div>
+
+      <div v-show="settings_show" class="settings">
+        <div class="settings-item">
+          <label>每行最大图片个数：</label>
+          <input class="settings-line" v-model="line_num" type="number" placeholder="不填写则取默认值" :disabled="checked" /> 个
         </div>
 
-        <p class="tip">注：此为单张图片的宽高</p>
+        <div class="settings-item checkbox">
+          <input id="singlerow" type="checkbox" v-model="checked" />
+          <label>单行模式</label>
+        </div>
+
+        <p class="tip">注：图片个数超过该数量时，多出的图片将会折至第二行。开启单行模式时，会忽略每行最大图片数，将所有图片都生成在一行上</p>
 
       </div>
 
@@ -64,6 +77,8 @@ export default {
       value: '',
       width: 0,
       height: 0,
+      line_num: 10,
+      checked: false,
     };
   },
 
@@ -146,6 +161,8 @@ export default {
           height: this.height,
         },
         files: this.files,
+        line: this.line_num,
+        checked: this.checked,
       };
 
       this.$emit('change', obj);
@@ -207,14 +224,29 @@ export default {
           margin-top: 20px;
         }
 
+        label {
+          flex: none;
+        }
+
         input {
+          flex: 1;
           display: block;
           padding: 5px 10px;
           border: 1px solid #aaa;
           background-color: #e9e9e9;
           border-radius: 4px;
+          width: 40px;
         }
 
+        &.checkbox{
+          input {
+            flex: none;
+          }
+        }
+
+        .settings-line[disabled] {
+          opacity: .5;
+        }
       }
       .tip{
         margin-top: 10px;

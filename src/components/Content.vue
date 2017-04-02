@@ -22,21 +22,21 @@ export default {
 
   data() {
     return {
+      lineNum: 10,
     };
   },
 
   computed: {
     pixel_width() {
-      const width = this.files.length > 10
-      ? this.pixel.width * 10
+      const width = this.files.length > this.lineNum
+      ? this.pixel.width * this.lineNum
       : this.pixel.width * this.files.length;
 
       return width;
     },
 
     pixel_height() {
-      const height = this.pixel.height * Math.ceil(this.files.length / 10);
-
+      const height = this.pixel.height * Math.ceil(this.files.length / this.lineNum);
       return height;
     },
 
@@ -65,6 +65,18 @@ export default {
         return {};
       },
     },
+
+    line_num: {
+      type: Number,
+      required: false,
+      default: 10,
+    },
+
+    single_row: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   watch: {
@@ -79,6 +91,22 @@ export default {
         this.draw();
       });
     },
+
+    line_num(val) {
+      this.lineNum = val;
+      this.$nextTick(() => {
+        this.draw();
+      });
+    },
+
+    single_row(val) {
+      if (val) {
+        this.lineNum = 9999;
+      }
+      this.$nextTick(() => {
+        this.draw();
+      });
+    },
   },
 
   methods: {
@@ -86,17 +114,16 @@ export default {
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
 
-      const line = this.files.length < 10 ? this.files.length : 10;
-      const row = Math.ceil(this.files.length / 10);
+      const line = this.files.length < this.lineNum ? this.files.length : this.lineNum;
+      const row = Math.ceil(this.files.length / this.lineNum);
 
       this.files.forEach((val, index) => {
-        const w = index % 10;
-        const h = Math.floor(index / 10);
+        const w = index % this.lineNum;
+        const h = Math.floor(index / this.lineNum);
 
         ctx.drawImage(val, this.single_width * w, this.single_height * h,
           this.single_width, this.single_height);
       });
-
     },
   },
 };

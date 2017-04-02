@@ -10,7 +10,12 @@
     </header>
 
     <div class="main">
-      <el-content ref="cont" class="main-content" :files="files" :pixel="pixel"></el-content>
+      <el-content ref="cont" class="main-content"
+        :files="files"
+        :pixel="pixel"
+        :line_num="line_num"
+        :single_row="single_row">
+      </el-content>
       <el-sidebar ref="bar" class="main-sidebar"></el-sidebar>
     </div>
   </div>
@@ -35,14 +40,17 @@ export default {
         width: 0,
         height: 0,
       },
+      line_num: 10,
+      single_row: false,
     };
   },
 
   mounted() {
     this.$refs.bar.$on('change', val => {
-      console.debug('sidebar change');
       this.files = val.files;
       this.pixel = val.pixel;
+      this.line_num = val.line;
+      this.single_row = val.checked;
     });
   },
 };

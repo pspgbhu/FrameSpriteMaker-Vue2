@@ -5,7 +5,7 @@
         <h1>逐帧动画雪碧图生成器</h1>
       </div>
       <div class="header-right">
-        <a href="https://github.com/pspgbhu/FSM-FrameSpriteMaker-Vue2.1">GitHub</a>
+        <a href="https://github.com/pspgbhu/FSM-FrameSpriteMaker-Vue2">GitHub</a>
       </div>
     </header>
 

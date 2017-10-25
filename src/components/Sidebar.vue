@@ -112,7 +112,8 @@ export default {
 
       for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
-        files[i].index = /\d+/.exec(file.name);
+        const reg = /(\d+)\./.exec(file.name);
+        files[i].index = reg !== null && reg[1] ? reg[1] : null;
         filesArr.push(file);
       }
 

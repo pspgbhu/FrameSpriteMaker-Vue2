@@ -1,7 +1,7 @@
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,a，i{ margin:0; padding:0; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;}
 body {background-color: #fff;
     color: #000;
-    font: 400 14px/1.5 "微软雅黑","Hiragino Sans GB","WenQuanYi Micro Hei",tahoma,sans-serif;}
+    font: 400 14px/1.5 'Helvetica', "微软雅黑", Verdana, Arial, "Hiragino Sans GB","WenQuanYi Micro Hei",tahoma,sans-serif;}
 h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
 address, caption, cite, code, dfn, em, strong, th, var, i { font-style:normal; font-weight:normal;}
 a {color:#000; text-decoration:none; display: block;}

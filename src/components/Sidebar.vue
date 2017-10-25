@@ -102,14 +102,23 @@ export default {
   methods: {
     _uploadImg(e) {
 
-      const filesList = e.target.files;
+      const files = e.target.files;
+      const filesArr = [];
       const urlList = [];
 
-      if (filesList.length === 0) {
+      if (files.length === 0) {
         return;
       }
 
-      for (const v of filesList) {
+      for (let i = 0; i < files.length; i += 1) {
+        const file = files[i];
+        files[i].index = /\d+/.exec(file.name);
+        filesArr.push(file);
+      }
+
+      const sortedList = this._quickSort(filesArr);
+
+      for (const v of sortedList) {
         const src = window.URL.createObjectURL(v);
         urlList.push(src);
       }
@@ -166,6 +175,24 @@ export default {
       };
 
       this.$emit('change', obj);
+    },
+
+    _quickSort(arr) {
+      if (arr.length <= 1) {
+        return arr;
+      }
+      const pivotIndex = Math.floor(arr.length / 2);
+      const pivot = arr.splice(pivotIndex, 1)[0];
+      const left = [];
+      const right = [];
+      for (let i = 0; i < arr.length; i += 1) {
+        if (arr[i].index < pivot.index) {
+          left.push(arr[i]);
+        } else {
+          right.push(arr[i]);
+        }
+      }
+      return this._quickSort(left).concat([pivot], this._quickSort(right));
     },
   },
 };
